@@ -1,0 +1,68 @@
+openapi: 3.0.0
+info:
+  title: Flair API - Pucks
+  version: 1.0.0
+paths:
+  /api/v1/pucks:
+    get:
+      summary: Get all pucks
+      operationId: getPucks
+      responses:
+        '200':
+          description: A list of pucks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Puck'
+  /api/v1/pucks/{id}/current-reading:
+    get:
+      summary: Get current reading for a puck
+      operationId: getPuckCurrentReading
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Current reading of the puck
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reading'
+components:
+  schemas:
+    Puck:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        location:
+          type: string
+        status:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    Reading:
+      type: object
+      properties:
+        temperature:
+          type: number
+          format: float
+        humidity:
+          type: number
+          format: float
+        battery:
+          type: number
+          format: float
+        timestamp:
+          type: string
+          format: date-time

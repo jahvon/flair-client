@@ -1,0 +1,66 @@
+openapi: 3.0.0
+info:
+  title: Flair API - Bridges
+  version: 1.0.0
+paths:
+  /api/v1/bridges:
+    get:
+      summary: Get all bridges
+      operationId: getBridges
+      responses:
+        '200':
+          description: A list of bridges
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Bridge'
+  /api/v1/bridges/{id}/current-reading:
+    get:
+      summary: Get current reading for a bridge
+      operationId: getBridgeCurrentReading
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Current reading of the bridge
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BridgeReading'
+components:
+  schemas:
+    Bridge:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        location:
+          type: string
+        status:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    BridgeReading:
+      type: object
+      properties:
+        temperature:
+          type: number
+          format: float
+        humidity:
+          type: number
+          format: float
+        signalStrength:
+          type: number
+          format: float
+        timestamp:
+          type: string
+          format: date-time

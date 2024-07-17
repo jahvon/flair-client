@@ -1,0 +1,61 @@
+openapi: 3.0.0
+info:
+  title: Flair API - Rooms
+  version: 1.0.0
+paths:
+  /api/v1/rooms:
+    get:
+      summary: Get all rooms
+      operationId: getRooms
+      responses:
+        '200':
+          description: A list of rooms
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Room'
+  /api/v1/rooms/{id}/set-point:
+    patch:
+      summary: Adjust room set point
+      operationId: patchRoomSetPoint
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                setPoint:
+                  type: number
+                  format: float
+      responses:
+        '200':
+          description: Room set point adjusted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Room'
+components:
+  schemas:
+    Room:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        location:
+          type: string
+        status:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
