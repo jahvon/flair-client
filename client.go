@@ -11,8 +11,8 @@ import "golang.org/x/oauth2"
 const APIURL = "https://api.flair.co"
 
 var Endpoint = oauth2.Endpoint{
-	AuthURL:  APIURL + "/oauth/authorize",
-	TokenURL: APIURL + "/oauth/token",
+	AuthURL:  APIURL + "/oauth2/authorize",
+	TokenURL: APIURL + "/oauth2/token",
 }
 
 const (
