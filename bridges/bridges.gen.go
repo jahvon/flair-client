@@ -146,7 +146,7 @@ func NewGetBridgesRequest(server string) (*http.Request, error) {
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/api/v1/bridges")
+	operationPath := fmt.Sprintf("/api/bridges")
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -180,7 +180,7 @@ func NewGetBridgeCurrentReadingRequest(server string, id string) (*http.Request,
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/api/v1/bridges/%s/current-reading", pathParam0)
+	operationPath := fmt.Sprintf("/api/bridges/%s/current-reading", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}

@@ -161,7 +161,7 @@ func NewGetRoomsRequest(server string) (*http.Request, error) {
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/api/v1/rooms")
+	operationPath := fmt.Sprintf("/api/rooms")
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -206,7 +206,7 @@ func NewPatchRoomSetPointRequestWithBody(server string, id string, contentType s
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/api/v1/rooms/%s/set-point", pathParam0)
+	operationPath := fmt.Sprintf("/api/rooms/%s/set-point", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}

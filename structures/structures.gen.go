@@ -161,7 +161,7 @@ func NewGetStructuresRequest(server string) (*http.Request, error) {
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/api/v1/structures")
+	operationPath := fmt.Sprintf("/api/structures")
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -206,7 +206,7 @@ func NewPatchStructureRequestWithBody(server string, id string, contentType stri
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/api/v1/structures/%s", pathParam0)
+	operationPath := fmt.Sprintf("/api/structures/%s", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}

@@ -147,7 +147,7 @@ func NewGetPucksRequest(server string) (*http.Request, error) {
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/api/v1/pucks")
+	operationPath := fmt.Sprintf("/api/pucks")
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -181,7 +181,7 @@ func NewGetPuckCurrentReadingRequest(server string, id string) (*http.Request, e
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/api/v1/pucks/%s/current-reading", pathParam0)
+	operationPath := fmt.Sprintf("/api/pucks/%s/current-reading", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}

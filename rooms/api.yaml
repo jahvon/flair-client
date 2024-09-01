@@ -3,7 +3,7 @@ info:
   title: Flair API - Rooms
   version: 1.0.0
 paths:
-  /api/v1/rooms:
+  /api/rooms:
     get:
       summary: Get all rooms
       operationId: getRooms
@@ -16,7 +16,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Room'
-  /api/v1/rooms/{id}/set-point:
+  /api/rooms/{id}/set-point:
     patch:
       summary: Adjust room set point
       operationId: patchRoomSetPoint

@@ -3,7 +3,7 @@ info:
   title: Flair API - Pucks
   version: 1.0.0
 paths:
-  /api/v1/pucks:
+  /api/pucks:
     get:
       summary: Get all pucks
       operationId: getPucks
@@ -16,7 +16,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Puck'
-  /api/v1/pucks/{id}/current-reading:
+  /api/pucks/{id}/current-reading:
     get:
       summary: Get current reading for a puck
       operationId: getPuckCurrentReading

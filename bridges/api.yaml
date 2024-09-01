@@ -3,7 +3,7 @@ info:
   title: Flair API - Bridges
   version: 1.0.0
 paths:
-  /api/v1/bridges:
+  /api/bridges:
     get:
       summary: Get all bridges
       operationId: getBridges
@@ -16,7 +16,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Bridge'
-  /api/v1/bridges/{id}/current-reading:
+  /api/bridges/{id}/current-reading:
     get:
       summary: Get current reading for a bridge
       operationId: getBridgeCurrentReading
