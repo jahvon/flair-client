@@ -251,7 +251,9 @@ type ClientWithResponsesInterface interface {
 type GetBridgesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *[]Bridge
+	JSON200      *struct {
+		Data *[]Bridge `json:"data,omitempty"`
+	}
 }
 
 // Status returns HTTPResponse.Status
@@ -273,7 +275,9 @@ func (r GetBridgesResponse) StatusCode() int {
 type GetBridgeCurrentReadingResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *BridgeReading
+	JSON200      *struct {
+		Data *BridgeReading `json:"data,omitempty"`
+	}
 }
 
 // Status returns HTTPResponse.Status
@@ -325,7 +329,9 @@ func ParseGetBridgesResponse(rsp *http.Response) (*GetBridgesResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest []Bridge
+		var dest struct {
+			Data *[]Bridge `json:"data,omitempty"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -351,7 +357,9 @@ func ParseGetBridgeCurrentReadingResponse(rsp *http.Response) (*GetBridgeCurrent
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest BridgeReading
+		var dest struct {
+			Data *BridgeReading `json:"data,omitempty"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}

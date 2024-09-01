@@ -13,9 +13,12 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Structure'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Structure'
   /api/structures/{id}:
     patch:
       summary: Update structure details
@@ -33,17 +36,23 @@ paths:
             schema:
               type: object
               properties:
-                name:
-                  type: string
-                location:
-                  type: string
+                  data:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      location:
+                        type: string
       responses:
         '200':
           description: Structure details updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Structure'
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Structure'
 components:
   schemas:
     Structure:

@@ -13,9 +13,12 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Bridge'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Bridge'
   /api/bridges/{id}/current-reading:
     get:
       summary: Get current reading for a bridge
@@ -32,7 +35,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BridgeReading'
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/BridgeReading'
 components:
   schemas:
     Bridge:

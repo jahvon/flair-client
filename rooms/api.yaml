@@ -13,9 +13,12 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Room'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Room'
   /api/rooms/{id}/set-point:
     patch:
       summary: Adjust room set point
@@ -42,7 +45,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Room'
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Room'
 components:
   schemas:
     Room:

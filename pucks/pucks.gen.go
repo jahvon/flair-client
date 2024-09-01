@@ -252,7 +252,9 @@ type ClientWithResponsesInterface interface {
 type GetPucksResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *[]Puck
+	JSON200      *struct {
+		Data *[]Puck `json:"data,omitempty"`
+	}
 }
 
 // Status returns HTTPResponse.Status
@@ -274,7 +276,9 @@ func (r GetPucksResponse) StatusCode() int {
 type GetPuckCurrentReadingResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *Reading
+	JSON200      *struct {
+		Data *Reading `json:"data,omitempty"`
+	}
 }
 
 // Status returns HTTPResponse.Status
@@ -326,7 +330,9 @@ func ParseGetPucksResponse(rsp *http.Response) (*GetPucksResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest []Puck
+		var dest struct {
+			Data *[]Puck `json:"data,omitempty"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -352,7 +358,9 @@ func ParseGetPuckCurrentReadingResponse(rsp *http.Response) (*GetPuckCurrentRead
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest Reading
+		var dest struct {
+			Data *Reading `json:"data,omitempty"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}

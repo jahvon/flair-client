@@ -27,8 +27,10 @@ type Structure struct {
 
 // PatchStructureJSONBody defines parameters for PatchStructure.
 type PatchStructureJSONBody struct {
-	Location *string `json:"location,omitempty"`
-	Name     *string `json:"name,omitempty"`
+	Data *struct {
+		Location *string `json:"location,omitempty"`
+		Name     *string `json:"name,omitempty"`
+	} `json:"data,omitempty"`
 }
 
 // PatchStructureJSONRequestBody defines body for PatchStructure for application/json ContentType.
@@ -281,7 +283,9 @@ type ClientWithResponsesInterface interface {
 type GetStructuresResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *[]Structure
+	JSON200      *struct {
+		Data *[]Structure `json:"data,omitempty"`
+	}
 }
 
 // Status returns HTTPResponse.Status
@@ -303,7 +307,9 @@ func (r GetStructuresResponse) StatusCode() int {
 type PatchStructureResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *Structure
+	JSON200      *struct {
+		Data *Structure `json:"data,omitempty"`
+	}
 }
 
 // Status returns HTTPResponse.Status
@@ -363,7 +369,9 @@ func ParseGetStructuresResponse(rsp *http.Response) (*GetStructuresResponse, err
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest []Structure
+		var dest struct {
+			Data *[]Structure `json:"data,omitempty"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -389,7 +397,9 @@ func ParsePatchStructureResponse(rsp *http.Response) (*PatchStructureResponse, e
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest Structure
+		var dest struct {
+			Data *Structure `json:"data,omitempty"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}

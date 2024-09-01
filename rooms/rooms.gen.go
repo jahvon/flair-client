@@ -281,7 +281,9 @@ type ClientWithResponsesInterface interface {
 type GetRoomsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *[]Room
+	JSON200      *struct {
+		Data *[]Room `json:"data,omitempty"`
+	}
 }
 
 // Status returns HTTPResponse.Status
@@ -303,7 +305,9 @@ func (r GetRoomsResponse) StatusCode() int {
 type PatchRoomSetPointResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *Room
+	JSON200      *struct {
+		Data *Room `json:"data,omitempty"`
+	}
 }
 
 // Status returns HTTPResponse.Status
@@ -363,7 +367,9 @@ func ParseGetRoomsResponse(rsp *http.Response) (*GetRoomsResponse, error) {
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest []Room
+		var dest struct {
+			Data *[]Room `json:"data,omitempty"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -389,7 +395,9 @@ func ParsePatchRoomSetPointResponse(rsp *http.Response) (*PatchRoomSetPointRespo
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest Room
+		var dest struct {
+			Data *Room `json:"data,omitempty"`
+		}
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}

@@ -13,9 +13,12 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Puck'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Puck'
   /api/pucks/{id}/current-reading:
     get:
       summary: Get current reading for a puck
@@ -32,7 +35,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Reading'
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Reading'
 components:
   schemas:
     Puck:
