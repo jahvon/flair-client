@@ -18,20 +18,88 @@ import (
 
 // Puck defines model for Puck.
 type Puck struct {
-	CreatedAt   *time.Time `json:"createdAt,omitempty"`
-	Description *string    `json:"description,omitempty"`
-	Id          *string    `json:"id,omitempty"`
-	Location    *string    `json:"location,omitempty"`
-	Name        *string    `json:"name,omitempty"`
-	Status      *string    `json:"status,omitempty"`
+	Attributes *struct {
+		BeaconIntervalMs           *int       `json:"beacon-interval-ms,omitempty"`
+		BluetoothTxPowerMw         *int       `json:"bluetooth-tx-power-mw,omitempty"`
+		CreatedAt                  *time.Time `json:"created-at,omitempty"`
+		CurrentHumidity            *int       `json:"current-humidity,omitempty"`
+		CurrentRssi                *int       `json:"current-rssi,omitempty"`
+		CurrentTemperatureC        *float32   `json:"current-temperature-c,omitempty"`
+		DemoMode                   *int       `json:"demo-mode,omitempty"`
+		DisplayNumber              *string    `json:"display-number,omitempty"`
+		DropRate                   *float32   `json:"drop-rate,omitempty"`
+		HumidityOffset             *float32   `json:"humidity-offset"`
+		Inactive                   *bool      `json:"inactive,omitempty"`
+		IrDownload                 *bool      `json:"ir-download,omitempty"`
+		IrSetupEnabled             *bool      `json:"ir-setup-enabled"`
+		IsGateway                  *bool      `json:"is-gateway,omitempty"`
+		Name                       *string    `json:"name,omitempty"`
+		OauthAppAssignedAt         *time.Time `json:"oauth-app-assigned-at"`
+		Orientation                *string    `json:"orientation,omitempty"`
+		PuckDisplayColor           *string    `json:"puck-display-color,omitempty"`
+		ReportingIntervalDs        *int       `json:"reporting-interval-ds,omitempty"`
+		SubGhzRadioTxPowerMw       *int       `json:"sub-ghz-radio-tx-power-mw"`
+		TemperatureOffsetC         *float32   `json:"temperature-offset-c"`
+		TemperatureOffsetOverrideC *float32   `json:"temperature-offset-override-c"`
+		UpdatedAt                  *time.Time `json:"updated-at,omitempty"`
+	} `json:"attributes,omitempty"`
+	Id            *string `json:"id,omitempty"`
+	Relationships *struct {
+		Room *struct {
+			Data *struct {
+				Id   *string `json:"id,omitempty"`
+				Type *string `json:"type,omitempty"`
+			} `json:"data,omitempty"`
+			Links *struct {
+				Related *string `json:"related,omitempty"`
+				Self    *string `json:"self,omitempty"`
+			} `json:"links,omitempty"`
+		} `json:"room,omitempty"`
+	} `json:"relationships,omitempty"`
+	Type *string `json:"type,omitempty"`
 }
 
 // Reading defines model for Reading.
 type Reading struct {
-	Battery     *float32   `json:"battery,omitempty"`
-	Humidity    *float32   `json:"humidity,omitempty"`
-	Temperature *float32   `json:"temperature,omitempty"`
-	Timestamp   *time.Time `json:"timestamp,omitempty"`
+	Attributes *struct {
+		BeaconIntervalMs           *int       `json:"beacon-interval-ms,omitempty"`
+		BluetoothTxPowerMw         *int       `json:"bluetooth-tx-power-mw,omitempty"`
+		CreatedAt                  *time.Time `json:"created-at,omitempty"`
+		CurrentHumidity            *int       `json:"current-humidity,omitempty"`
+		CurrentRssi                *int       `json:"current-rssi,omitempty"`
+		CurrentTemperatureC        *float32   `json:"current-temperature-c,omitempty"`
+		DemoMode                   *int       `json:"demo-mode,omitempty"`
+		DisplayNumber              *string    `json:"display-number,omitempty"`
+		DropRate                   *float32   `json:"drop-rate,omitempty"`
+		HumidityOffset             *float32   `json:"humidity-offset"`
+		Inactive                   *bool      `json:"inactive,omitempty"`
+		IrDownload                 *bool      `json:"ir-download,omitempty"`
+		IrSetupEnabled             *bool      `json:"ir-setup-enabled"`
+		IsGateway                  *bool      `json:"is-gateway,omitempty"`
+		Name                       *string    `json:"name,omitempty"`
+		OauthAppAssignedAt         *time.Time `json:"oauth-app-assigned-at"`
+		Orientation                *string    `json:"orientation,omitempty"`
+		PuckDisplayColor           *string    `json:"puck-display-color,omitempty"`
+		ReportingIntervalDs        *int       `json:"reporting-interval-ds,omitempty"`
+		SubGhzRadioTxPowerMw       *int       `json:"sub-ghz-radio-tx-power-mw"`
+		TemperatureOffsetC         *float32   `json:"temperature-offset-c"`
+		TemperatureOffsetOverrideC *float32   `json:"temperature-offset-override-c"`
+		UpdatedAt                  *time.Time `json:"updated-at,omitempty"`
+	} `json:"attributes,omitempty"`
+	Id            *string `json:"id,omitempty"`
+	Relationships *struct {
+		Room *struct {
+			Data *struct {
+				Id   *string `json:"id,omitempty"`
+				Type *string `json:"type,omitempty"`
+			} `json:"data,omitempty"`
+			Links *struct {
+				Related *string `json:"related,omitempty"`
+				Self    *string `json:"self,omitempty"`
+			} `json:"links,omitempty"`
+		} `json:"room,omitempty"`
+	} `json:"relationships,omitempty"`
+	Type *string `json:"type,omitempty"`
 }
 
 // RequestEditorFn  is the function signature for the RequestEditor callback function

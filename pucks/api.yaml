@@ -44,31 +44,180 @@ components:
     Puck:
       type: object
       properties:
+        type:
+          type: string
+        attributes:
+          type: object
+          properties:
+            puck-display-color:
+              type: string
+            name:
+              type: string
+            bluetooth-tx-power-mw:
+              type: integer
+            sub-ghz-radio-tx-power-mw:
+              type: integer
+              nullable: true
+            beacon-interval-ms:
+              type: integer
+            ir-download:
+              type: boolean
+            created-at:
+              type: string
+              format: date-time
+            is-gateway:
+              type: boolean
+            drop-rate:
+              type: number
+              format: float
+            current-humidity:
+              type: integer
+            temperature-offset-override-c:
+              type: number
+              format: float
+              nullable: true
+            orientation:
+              type: string
+            temperature-offset-c:
+              type: number
+              format: float
+              nullable: true
+            updated-at:
+              type: string
+              format: date-time
+            current-rssi:
+              type: integer
+            current-temperature-c:
+              type: number
+              format: float
+            ir-setup-enabled:
+              type: boolean
+              nullable: true
+            demo-mode:
+              type: integer
+            humidity-offset:
+              type: number
+              format: float
+              nullable: true
+            display-number:
+              type: string
+            reporting-interval-ds:
+              type: integer
+            inactive:
+              type: boolean
+            oauth-app-assigned-at:
+              type: string
+              format: date-time
+              nullable: true
         id:
           type: string
-        name:
-          type: string
-        description:
-          type: string
-        location:
-          type: string
-        status:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
+        relationships:
+          type: object
+          properties:
+            room:
+              type: object
+              properties:
+                links:
+                  type: object
+                  properties:
+                    self:
+                      type: string
+                    related:
+                      type: string
+                data:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                    id:
+                      type: string
     Reading:
       type: object
       properties:
-        temperature:
-          type: number
-          format: float
-        humidity:
-          type: number
-          format: float
-        battery:
-          type: number
-          format: float
-        timestamp:
+        type:
           type: string
-          format: date-time
+        attributes:
+          type: object
+          properties:
+            puck-display-color:
+              type: string
+            name:
+              type: string
+            bluetooth-tx-power-mw:
+              type: integer
+            sub-ghz-radio-tx-power-mw:
+              type: integer
+              nullable: true
+            beacon-interval-ms:
+              type: integer
+            ir-download:
+              type: boolean
+            created-at:
+              type: string
+              format: date-time
+            is-gateway:
+              type: boolean
+            drop-rate:
+              type: number
+              format: float
+            current-humidity:
+              type: integer
+            temperature-offset-override-c:
+              type: number
+              format: float
+              nullable: true
+            orientation:
+              type: string
+            temperature-offset-c:
+              type: number
+              format: float
+              nullable: true
+            updated-at:
+              type: string
+              format: date-time
+            current-rssi:
+              type: integer
+            current-temperature-c:
+              type: number
+              format: float
+            ir-setup-enabled:
+              type: boolean
+              nullable: true
+            demo-mode:
+              type: integer
+            humidity-offset:
+              type: number
+              format: float
+              nullable: true
+            display-number:
+              type: string
+            reporting-interval-ds:
+              type: integer
+            inactive:
+              type: boolean
+            oauth-app-assigned-at:
+              type: string
+              format: date-time
+              nullable: true
+        id:
+          type: string
+        relationships:
+          type: object
+          properties:
+            room:
+              type: object
+              properties:
+                links:
+                  type: object
+                  properties:
+                    self:
+                      type: string
+                    related:
+                      type: string
+                data:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                    id:
+                      type: string
