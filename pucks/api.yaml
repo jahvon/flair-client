@@ -71,7 +71,8 @@ components:
               type: number
               format: float
             current-humidity:
-              type: integer
+              type: number
+              format: float
             temperature-offset-override-c:
               type: number
               format: float
@@ -86,7 +87,8 @@ components:
               type: string
               format: date-time
             current-rssi:
-              type: integer
+              type: number
+              format: float
             current-temperature-c:
               type: number
               format: float
@@ -161,7 +163,8 @@ components:
               type: number
               format: float
             current-humidity:
-              type: integer
+              type: number
+              format: float
             temperature-offset-override-c:
               type: number
               format: float
@@ -176,7 +179,8 @@ components:
               type: string
               format: date-time
             current-rssi:
-              type: integer
+              type: number
+              format: float
             current-temperature-c:
               type: number
               format: float

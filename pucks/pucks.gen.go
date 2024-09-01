@@ -22,8 +22,8 @@ type Puck struct {
 		BeaconIntervalMs           *int       `json:"beacon-interval-ms,omitempty"`
 		BluetoothTxPowerMw         *int       `json:"bluetooth-tx-power-mw,omitempty"`
 		CreatedAt                  *time.Time `json:"created-at,omitempty"`
-		CurrentHumidity            *int       `json:"current-humidity,omitempty"`
-		CurrentRssi                *int       `json:"current-rssi,omitempty"`
+		CurrentHumidity            *float32   `json:"current-humidity,omitempty"`
+		CurrentRssi                *float32   `json:"current-rssi,omitempty"`
 		CurrentTemperatureC        *float32   `json:"current-temperature-c,omitempty"`
 		DemoMode                   *int       `json:"demo-mode,omitempty"`
 		DisplayNumber              *string    `json:"display-number,omitempty"`
@@ -65,8 +65,8 @@ type Reading struct {
 		BeaconIntervalMs           *int       `json:"beacon-interval-ms,omitempty"`
 		BluetoothTxPowerMw         *int       `json:"bluetooth-tx-power-mw,omitempty"`
 		CreatedAt                  *time.Time `json:"created-at,omitempty"`
-		CurrentHumidity            *int       `json:"current-humidity,omitempty"`
-		CurrentRssi                *int       `json:"current-rssi,omitempty"`
+		CurrentHumidity            *float32   `json:"current-humidity,omitempty"`
+		CurrentRssi                *float32   `json:"current-rssi,omitempty"`
 		CurrentTemperatureC        *float32   `json:"current-temperature-c,omitempty"`
 		DemoMode                   *int       `json:"demo-mode,omitempty"`
 		DisplayNumber              *string    `json:"display-number,omitempty"`
