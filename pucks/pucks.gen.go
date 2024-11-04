@@ -16,90 +16,149 @@ import (
 	"github.com/oapi-codegen/runtime"
 )
 
-// Puck defines model for Puck.
-type Puck struct {
-	Attributes *struct {
-		BeaconIntervalMs           *int       `json:"beacon-interval-ms,omitempty"`
-		BluetoothTxPowerMw         *int       `json:"bluetooth-tx-power-mw,omitempty"`
-		CreatedAt                  *time.Time `json:"created-at,omitempty"`
-		CurrentHumidity            *float32   `json:"current-humidity,omitempty"`
-		CurrentRssi                *float32   `json:"current-rssi,omitempty"`
-		CurrentTemperatureC        *float32   `json:"current-temperature-c,omitempty"`
-		DemoMode                   *int       `json:"demo-mode,omitempty"`
-		DisplayNumber              *string    `json:"display-number,omitempty"`
-		DropRate                   *float32   `json:"drop-rate,omitempty"`
-		HumidityOffset             *float32   `json:"humidity-offset"`
-		Inactive                   *bool      `json:"inactive,omitempty"`
-		IrDownload                 *bool      `json:"ir-download,omitempty"`
-		IrSetupEnabled             *bool      `json:"ir-setup-enabled"`
-		IsGateway                  *bool      `json:"is-gateway,omitempty"`
-		Name                       *string    `json:"name,omitempty"`
-		OauthAppAssignedAt         *time.Time `json:"oauth-app-assigned-at"`
-		Orientation                *string    `json:"orientation,omitempty"`
-		PuckDisplayColor           *string    `json:"puck-display-color,omitempty"`
-		ReportingIntervalDs        *int       `json:"reporting-interval-ds,omitempty"`
-		SubGhzRadioTxPowerMw       *int       `json:"sub-ghz-radio-tx-power-mw"`
-		TemperatureOffsetC         *float32   `json:"temperature-offset-c"`
-		TemperatureOffsetOverrideC *float32   `json:"temperature-offset-override-c"`
-		UpdatedAt                  *time.Time `json:"updated-at,omitempty"`
-	} `json:"attributes,omitempty"`
-	Id            *string `json:"id,omitempty"`
-	Relationships *struct {
-		Room *struct {
-			Data *struct {
-				Id   *string `json:"id,omitempty"`
-				Type *string `json:"type,omitempty"`
-			} `json:"data,omitempty"`
-			Links *struct {
-				Related *string `json:"related,omitempty"`
-				Self    *string `json:"self,omitempty"`
-			} `json:"links,omitempty"`
-		} `json:"room,omitempty"`
-	} `json:"relationships,omitempty"`
-	Type *string `json:"type,omitempty"`
+// Defines values for PuckAttributesOrientation.
+const (
+	Standing PuckAttributesOrientation = "standing"
+)
+
+// Defines values for PuckAttributesPuckDisplayColor.
+const (
+	Black PuckAttributesPuckDisplayColor = "black"
+	White PuckAttributesPuckDisplayColor = "white"
+)
+
+// CollectionMeta defines model for CollectionMeta.
+type CollectionMeta struct {
+	First string  `json:"first"`
+	Last  string  `json:"last"`
+	Next  *string `json:"next"`
+	Prev  *string `json:"prev"`
+	Self  string  `json:"self"`
 }
 
-// Reading defines model for Reading.
-type Reading struct {
-	Attributes *struct {
-		BeaconIntervalMs           *int       `json:"beacon-interval-ms,omitempty"`
-		BluetoothTxPowerMw         *int       `json:"bluetooth-tx-power-mw,omitempty"`
-		CreatedAt                  *time.Time `json:"created-at,omitempty"`
-		CurrentHumidity            *float32   `json:"current-humidity,omitempty"`
-		CurrentRssi                *float32   `json:"current-rssi,omitempty"`
-		CurrentTemperatureC        *float32   `json:"current-temperature-c,omitempty"`
-		DemoMode                   *int       `json:"demo-mode,omitempty"`
-		DisplayNumber              *string    `json:"display-number,omitempty"`
-		DropRate                   *float32   `json:"drop-rate,omitempty"`
-		HumidityOffset             *float32   `json:"humidity-offset"`
-		Inactive                   *bool      `json:"inactive,omitempty"`
-		IrDownload                 *bool      `json:"ir-download,omitempty"`
-		IrSetupEnabled             *bool      `json:"ir-setup-enabled"`
-		IsGateway                  *bool      `json:"is-gateway,omitempty"`
-		Name                       *string    `json:"name,omitempty"`
-		OauthAppAssignedAt         *time.Time `json:"oauth-app-assigned-at"`
-		Orientation                *string    `json:"orientation,omitempty"`
-		PuckDisplayColor           *string    `json:"puck-display-color,omitempty"`
-		ReportingIntervalDs        *int       `json:"reporting-interval-ds,omitempty"`
-		SubGhzRadioTxPowerMw       *int       `json:"sub-ghz-radio-tx-power-mw"`
-		TemperatureOffsetC         *float32   `json:"temperature-offset-c"`
-		TemperatureOffsetOverrideC *float32   `json:"temperature-offset-override-c"`
-		UpdatedAt                  *time.Time `json:"updated-at,omitempty"`
-	} `json:"attributes,omitempty"`
-	Id            *string `json:"id,omitempty"`
-	Relationships *struct {
-		Room *struct {
-			Data *struct {
-				Id   *string `json:"id,omitempty"`
-				Type *string `json:"type,omitempty"`
-			} `json:"data,omitempty"`
-			Links *struct {
-				Related *string `json:"related,omitempty"`
-				Self    *string `json:"self,omitempty"`
-			} `json:"links,omitempty"`
-		} `json:"room,omitempty"`
-	} `json:"relationships,omitempty"`
-	Type *string `json:"type,omitempty"`
+// LinkOnly defines model for LinkOnly.
+type LinkOnly struct {
+	Links Links `json:"links"`
+}
+
+// Links defines model for Links.
+type Links struct {
+	Related *string `json:"related,omitempty"`
+	Self    *string `json:"self,omitempty"`
+}
+
+// Puck defines model for Puck.
+type Puck struct {
+	Attributes    PuckAttributes    `json:"attributes"`
+	Id            string            `json:"id"`
+	Relationships PuckRelationships `json:"relationships"`
+	Type          string            `json:"type"`
+}
+
+// PuckAttributes defines model for PuckAttributes.
+type PuckAttributes struct {
+	BeaconIntervalMs           *int                            `json:"beacon-interval-ms,omitempty"`
+	BluetoothTxPowerMw         *int                            `json:"bluetooth-tx-power-mw,omitempty"`
+	CreatedAt                  *time.Time                      `json:"created-at,omitempty"`
+	CurrentHumidity            *int                            `json:"current-humidity,omitempty"`
+	CurrentRssi                *int                            `json:"current-rssi,omitempty"`
+	CurrentTemperatureC        *float32                        `json:"current-temperature-c,omitempty"`
+	DemoMode                   *int                            `json:"demo-mode,omitempty"`
+	DisplayNumber              *string                         `json:"display-number,omitempty"`
+	DropRate                   *float32                        `json:"drop-rate,omitempty"`
+	HumidityOffset             *float32                        `json:"humidity-offset"`
+	Inactive                   *bool                           `json:"inactive,omitempty"`
+	IrDownload                 *bool                           `json:"ir-download,omitempty"`
+	IrSetupEnabled             *bool                           `json:"ir-setup-enabled"`
+	IsGateway                  *bool                           `json:"is-gateway,omitempty"`
+	Name                       *string                         `json:"name,omitempty"`
+	OauthAppAssignedAt         *time.Time                      `json:"oauth-app-assigned-at"`
+	Orientation                *PuckAttributesOrientation      `json:"orientation,omitempty"`
+	PuckDisplayColor           *PuckAttributesPuckDisplayColor `json:"puck-display-color,omitempty"`
+	ReportingIntervalDs        *int                            `json:"reporting-interval-ds,omitempty"`
+	SubGhzRadioTxPowerMw       *int                            `json:"sub-ghz-radio-tx-power-mw"`
+	TemperatureOffsetC         *float32                        `json:"temperature-offset-c"`
+	TemperatureOffsetOverrideC *float32                        `json:"temperature-offset-override-c"`
+	UpdatedAt                  *time.Time                      `json:"updated-at,omitempty"`
+}
+
+// PuckAttributesOrientation defines model for PuckAttributes.Orientation.
+type PuckAttributesOrientation string
+
+// PuckAttributesPuckDisplayColor defines model for PuckAttributes.PuckDisplayColor.
+type PuckAttributesPuckDisplayColor string
+
+// PuckReading defines model for PuckReading.
+type PuckReading struct {
+	Attributes    PuckReadingAttributes    `json:"attributes"`
+	Id            *string                  `json:"id,omitempty"`
+	Relationships PuckReadingRelationships `json:"relationships"`
+	Type          string                   `json:"type"`
+}
+
+// PuckReadingAttributes defines model for PuckReadingAttributes.
+type PuckReadingAttributes struct {
+	ButtonPushes        *int       `json:"button-pushes,omitempty"`
+	CreatedAt           *time.Time `json:"created-at,omitempty"`
+	CurrentOffset       *int       `json:"current-offset,omitempty"`
+	DesiredTemperatureC *float32   `json:"desired-temperature-c,omitempty"`
+	DieTemperature      *int       `json:"die-temperature,omitempty"`
+	FirmwareVersionB    *int       `json:"firmware-version-b,omitempty"`
+	FirmwareVersionS    *int       `json:"firmware-version-s,omitempty"`
+	FirmwareVersionW    *int       `json:"firmware-version-w,omitempty"`
+	Humidity            *int       `json:"humidity,omitempty"`
+	IsGateway           *bool      `json:"is-gateway,omitempty"`
+	Light               *int       `json:"light,omitempty"`
+	MessageVersion      *int       `json:"message-version,omitempty"`
+	RoomPressure        *float32   `json:"room-pressure,omitempty"`
+	RoomTemperatureC    *float32   `json:"room-temperature-c,omitempty"`
+	RotaryEncodedClicks *int       `json:"rotary-encoded-clicks,omitempty"`
+	Rssi                *int       `json:"rssi,omitempty"`
+	SystemVoltage       *float32   `json:"system-voltage,omitempty"`
+	Temperature         *int       `json:"temperature,omitempty"`
+}
+
+// PuckReadingRelationships defines model for PuckReadingRelationships.
+type PuckReadingRelationships struct {
+	Puck Relationship `json:"puck"`
+}
+
+// PuckReadingResponse defines model for PuckReadingResponse.
+type PuckReadingResponse struct {
+	Data PuckReading `json:"data"`
+	Meta struct {
+		Self *string `json:"self,omitempty"`
+	} `json:"meta"`
+}
+
+// PuckRelationships defines model for PuckRelationships.
+type PuckRelationships struct {
+	BeaconSightings LinkOnly     `json:"beacon-sightings"`
+	ClosestVents    LinkOnly     `json:"closest-vents"`
+	CurrentState    LinkOnly     `json:"current-state"`
+	HardwareVersion Relationship `json:"hardware-version"`
+	PuckStates      LinkOnly     `json:"puck-states"`
+	Room            Relationship `json:"room"`
+	SensorReadings  LinkOnly     `json:"sensor-readings"`
+	Structure       Relationship `json:"structure"`
+}
+
+// PucksResponse defines model for PucksResponse.
+type PucksResponse struct {
+	Data []Puck         `json:"data"`
+	Meta CollectionMeta `json:"meta"`
+}
+
+// RelationData defines model for RelationData.
+type RelationData struct {
+	Id   string `json:"id"`
+	Type string `json:"type"`
+}
+
+// Relationship defines model for Relationship.
+type Relationship struct {
+	Data  RelationData `json:"data"`
+	Links Links        `json:"links"`
 }
 
 // RequestEditorFn  is the function signature for the RequestEditor callback function
@@ -175,15 +234,15 @@ func WithRequestEditorFn(fn RequestEditorFn) ClientOption {
 
 // The interface specification for the client above.
 type ClientInterface interface {
-	// GetPucks request
-	GetPucks(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// GetApiPucks request
+	GetApiPucks(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetPuckCurrentReading request
-	GetPuckCurrentReading(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// GetApiPucksIdCurrentReading request
+	GetApiPucksIdCurrentReading(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
 }
 
-func (c *Client) GetPucks(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetPucksRequest(c.Server)
+func (c *Client) GetApiPucks(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetApiPucksRequest(c.Server)
 	if err != nil {
 		return nil, err
 	}
@@ -194,8 +253,8 @@ func (c *Client) GetPucks(ctx context.Context, reqEditors ...RequestEditorFn) (*
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetPuckCurrentReading(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetPuckCurrentReadingRequest(c.Server, id)
+func (c *Client) GetApiPucksIdCurrentReading(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetApiPucksIdCurrentReadingRequest(c.Server, id)
 	if err != nil {
 		return nil, err
 	}
@@ -206,8 +265,8 @@ func (c *Client) GetPuckCurrentReading(ctx context.Context, id string, reqEditor
 	return c.Client.Do(req)
 }
 
-// NewGetPucksRequest generates requests for GetPucks
-func NewGetPucksRequest(server string) (*http.Request, error) {
+// NewGetApiPucksRequest generates requests for GetApiPucks
+func NewGetApiPucksRequest(server string) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -233,8 +292,8 @@ func NewGetPucksRequest(server string) (*http.Request, error) {
 	return req, nil
 }
 
-// NewGetPuckCurrentReadingRequest generates requests for GetPuckCurrentReading
-func NewGetPuckCurrentReadingRequest(server string, id string) (*http.Request, error) {
+// NewGetApiPucksIdCurrentReadingRequest generates requests for GetApiPucksIdCurrentReading
+func NewGetApiPucksIdCurrentReadingRequest(server string, id string) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -310,23 +369,21 @@ func WithBaseURL(baseURL string) ClientOption {
 
 // ClientWithResponsesInterface is the interface specification for the client with responses above.
 type ClientWithResponsesInterface interface {
-	// GetPucksWithResponse request
-	GetPucksWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetPucksResponse, error)
+	// GetApiPucksWithResponse request
+	GetApiPucksWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetApiPucksResponse, error)
 
-	// GetPuckCurrentReadingWithResponse request
-	GetPuckCurrentReadingWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*GetPuckCurrentReadingResponse, error)
+	// GetApiPucksIdCurrentReadingWithResponse request
+	GetApiPucksIdCurrentReadingWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*GetApiPucksIdCurrentReadingResponse, error)
 }
 
-type GetPucksResponse struct {
+type GetApiPucksResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *struct {
-		Data *[]Puck `json:"data,omitempty"`
-	}
+	JSON200      *PucksResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r GetPucksResponse) Status() string {
+func (r GetApiPucksResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -334,23 +391,21 @@ func (r GetPucksResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetPucksResponse) StatusCode() int {
+func (r GetApiPucksResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-type GetPuckCurrentReadingResponse struct {
+type GetApiPucksIdCurrentReadingResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *struct {
-		Data *Reading `json:"data,omitempty"`
-	}
+	JSON200      *PuckReadingResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r GetPuckCurrentReadingResponse) Status() string {
+func (r GetApiPucksIdCurrentReadingResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -358,49 +413,47 @@ func (r GetPuckCurrentReadingResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetPuckCurrentReadingResponse) StatusCode() int {
+func (r GetApiPucksIdCurrentReadingResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
 	return 0
 }
 
-// GetPucksWithResponse request returning *GetPucksResponse
-func (c *ClientWithResponses) GetPucksWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetPucksResponse, error) {
-	rsp, err := c.GetPucks(ctx, reqEditors...)
+// GetApiPucksWithResponse request returning *GetApiPucksResponse
+func (c *ClientWithResponses) GetApiPucksWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetApiPucksResponse, error) {
+	rsp, err := c.GetApiPucks(ctx, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetPucksResponse(rsp)
+	return ParseGetApiPucksResponse(rsp)
 }
 
-// GetPuckCurrentReadingWithResponse request returning *GetPuckCurrentReadingResponse
-func (c *ClientWithResponses) GetPuckCurrentReadingWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*GetPuckCurrentReadingResponse, error) {
-	rsp, err := c.GetPuckCurrentReading(ctx, id, reqEditors...)
+// GetApiPucksIdCurrentReadingWithResponse request returning *GetApiPucksIdCurrentReadingResponse
+func (c *ClientWithResponses) GetApiPucksIdCurrentReadingWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*GetApiPucksIdCurrentReadingResponse, error) {
+	rsp, err := c.GetApiPucksIdCurrentReading(ctx, id, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetPuckCurrentReadingResponse(rsp)
+	return ParseGetApiPucksIdCurrentReadingResponse(rsp)
 }
 
-// ParseGetPucksResponse parses an HTTP response from a GetPucksWithResponse call
-func ParseGetPucksResponse(rsp *http.Response) (*GetPucksResponse, error) {
+// ParseGetApiPucksResponse parses an HTTP response from a GetApiPucksWithResponse call
+func ParseGetApiPucksResponse(rsp *http.Response) (*GetApiPucksResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetPucksResponse{
+	response := &GetApiPucksResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			Data *[]Puck `json:"data,omitempty"`
-		}
+		var dest PucksResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
@@ -411,24 +464,22 @@ func ParseGetPucksResponse(rsp *http.Response) (*GetPucksResponse, error) {
 	return response, nil
 }
 
-// ParseGetPuckCurrentReadingResponse parses an HTTP response from a GetPuckCurrentReadingWithResponse call
-func ParseGetPuckCurrentReadingResponse(rsp *http.Response) (*GetPuckCurrentReadingResponse, error) {
+// ParseGetApiPucksIdCurrentReadingResponse parses an HTTP response from a GetApiPucksIdCurrentReadingWithResponse call
+func ParseGetApiPucksIdCurrentReadingResponse(rsp *http.Response) (*GetApiPucksIdCurrentReadingResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetPuckCurrentReadingResponse{
+	response := &GetApiPucksIdCurrentReadingResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest struct {
-			Data *Reading `json:"data,omitempty"`
-		}
+		var dest PuckReadingResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}

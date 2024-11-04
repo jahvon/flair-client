@@ -1,0 +1,280 @@
+openapi: 3.0.0
+info:
+  title: Flair API - HVAC Units
+  description: API specification for HVAC units
+  version: 1.0.0
+
+paths:
+  /api/hvac-units:
+    get:
+      summary: Get all HVAC units
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HVACCollectionResponse'
+
+  /api/hvac-units/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: ID of the HVAC unit
+    get:
+      summary: Get a single HVAC unit
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HVACSingleResponse'
+    patch:
+      summary: Update an HVAC unit
+      responses:
+        '200':
+          description: Successfully updated HVAC unit
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HVACSingleResponse'
+
+components:
+  schemas:
+    HVACCollectionResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/HVACUnit'
+        meta:
+          $ref: '#/components/schemas/CollectionMeta'
+      required:
+        - data
+        - meta
+
+    HVACSingleResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/HVACUnit'
+        meta:
+          $ref: '#/components/schemas/SingleMeta'
+      required:
+        - data
+        - meta
+
+    CollectionMeta:
+      type: object
+      properties:
+        self:
+          type: string
+        first:
+          type: string
+        last:
+          type: string
+        next:
+          type: string
+          nullable: true
+        prev:
+          type: string
+          nullable: true
+      required:
+        - self
+        - first
+        - last
+
+    SingleMeta:
+      type: object
+      properties:
+        self:
+          type: string
+          example: "/api/hvac-units/3b369fae-cc16-452c-80d8-4525e89efa42"
+      required:
+        - self
+
+    HVACUnit:
+      type: object
+      properties:
+        type:
+          type: string
+          example: "hvac-units"
+        id:
+          type: string
+          example: "3b369fae-cc16-452c-80d8-4525e89efa42"
+        attributes:
+          $ref: '#/components/schemas/HVACAttributes'
+        relationships:
+          $ref: '#/components/schemas/HVACRelationships'
+      required:
+        - type
+        - id
+        - attributes
+        - relationships
+
+    HVACAttributes:
+      type: object
+      properties:
+        swing-auto:
+          type: boolean
+        make-id:
+          type: string
+        codeset-id:
+          type: string
+        quiet-hours-end:
+          type: string
+          nullable: true
+        quiet-hours-start:
+          type: string
+          nullable: true
+        power:
+          type: string
+          enum: ["On", "Off"]
+        temperature-compensation:
+          type: string
+        codesets:
+          type: array
+          items:
+            $ref: '#/components/schemas/Codeset'
+        to-download:
+          type: boolean
+        name:
+          type: string
+        constraints:
+          $ref: '#/components/schemas/HVACConstraints'
+        fan-speed:
+          type: string
+          enum: ["High", "Mid", "Low", "Auto"]
+        temperature:
+          type: number
+        ir-device-model-id:
+          type: string
+          nullable: true
+        swing:
+          type: string
+          enum: ["On", "Off"]
+        incremental:
+          type: boolean
+        make-name:
+          type: string
+        mode:
+          type: string
+          enum: ["Heat", "Cool", "Auto", "Dry", "Fan"]
+        button-presses:
+          type: array
+          items:
+            type: string
+        model-id:
+          type: string
+        capabilities:
+          type: string
+        type:
+          type: string
+        default-fan-speed:
+          type: string
+
+    Codeset:
+      type: object
+      properties:
+        id:
+          type: integer
+        codeset-id:
+          type: string
+        capabilities:
+          type: string
+        rank:
+          type: integer
+      required:
+        - id
+        - codeset-id
+
+    HVACConstraints:
+      type: object
+      properties:
+        ON:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: object
+              additionalProperties:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    type: string
+        OFF:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: object
+              additionalProperties:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    type: string
+        temperature-scale:
+          type: string
+          enum: ["F", "C"]
+
+    HVACRelationships:
+      type: object
+      properties:
+        hvac-unit-states:
+          $ref: '#/components/schemas/LinkOnly'
+        puck:
+          $ref: '#/components/schemas/Relationship'
+        room:
+          $ref: '#/components/schemas/Relationship'
+        make:
+          $ref: '#/components/schemas/LinkOnly'
+        zone:
+          $ref: '#/components/schemas/Relationship'
+        structure:
+          $ref: '#/components/schemas/Relationship'
+        current-state:
+          $ref: '#/components/schemas/Relationship'
+
+    Relationship:
+      type: object
+      properties:
+        links:
+          $ref: '#/components/schemas/Links'
+        data:
+          $ref: '#/components/schemas/RelationData'
+      required:
+        - links
+
+    LinkOnly:
+      type: object
+      properties:
+        links:
+          $ref: '#/components/schemas/Links'
+      required:
+        - links
+
+    Links:
+      type: object
+      properties:
+        self:
+          type: string
+        related:
+          type: string
+
+    RelationData:
+      type: object
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+      required:
+        - type
+        - id

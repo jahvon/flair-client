@@ -1,227 +1,303 @@
 openapi: 3.0.0
 info:
   title: Flair API - Pucks
+  description: API specification for Flair Pucks and their readings
   version: 1.0.0
+
 paths:
   /api/pucks:
     get:
       summary: Get all pucks
-      operationId: getPucks
       responses:
         '200':
-          description: A list of pucks
+          description: List of pucks
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Puck'
+                $ref: '#/components/schemas/PucksResponse'
+
   /api/pucks/{id}/current-reading:
     get:
-      summary: Get current reading for a puck
-      operationId: getPuckCurrentReading
+      summary: Get current reading for a specific puck
       parameters:
         - name: id
           in: path
           required: true
           schema:
             type: string
+          description: ID of the puck
       responses:
         '200':
           description: Current reading of the puck
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    $ref: '#/components/schemas/Reading'
+                $ref: '#/components/schemas/PuckReadingResponse'
+
 components:
   schemas:
+    PucksResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Puck'
+        meta:
+          $ref: '#/components/schemas/CollectionMeta'
+      required:
+        - data
+        - meta
+
+    PuckReadingResponse:
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            self:
+              type: string
+              example: "/api/pucks/cadb1a39-59e0-5f39-9ae8-44aafcfa18f2/current-reading"
+        data:
+          $ref: '#/components/schemas/PuckReading'
+      required:
+        - data
+        - meta
+
+    PuckReading:
+      type: object
+      properties:
+        type:
+          type: string
+          example: "sensor-readings"
+        id:
+          type: string
+        attributes:
+          $ref: '#/components/schemas/PuckReadingAttributes'
+        relationships:
+          $ref: '#/components/schemas/PuckReadingRelationships'
+      required:
+        - type
+        - attributes
+        - relationships
+
+    PuckReadingAttributes:
+      type: object
+      properties:
+        firmware-version-w:
+          type: integer
+        rssi:
+          type: integer
+        button-pushes:
+          type: integer
+        die-temperature:
+          type: integer
+        is-gateway:
+          type: boolean
+        system-voltage:
+          type: number
+          format: float
+        desired-temperature-c:
+          type: number
+          format: float
+        room-pressure:
+          type: number
+          format: float
+        firmware-version-b:
+          type: integer
+        humidity:
+          type: integer
+        room-temperature-c:
+          type: number
+          format: float
+        current-offset:
+          type: integer
+        message-version:
+          type: integer
+        rotary-encoded-clicks:
+          type: integer
+        firmware-version-s:
+          type: integer
+        created-at:
+          type: string
+          format: date-time
+        light:
+          type: integer
+        temperature:
+          type: integer
+
+    PuckReadingRelationships:
+      type: object
+      properties:
+        puck:
+          $ref: '#/components/schemas/Relationship'
+      required:
+        - puck
+
     Puck:
       type: object
       properties:
         type:
           type: string
-        attributes:
-          type: object
-          properties:
-            puck-display-color:
-              type: string
-            name:
-              type: string
-            bluetooth-tx-power-mw:
-              type: integer
-            sub-ghz-radio-tx-power-mw:
-              type: integer
-              nullable: true
-            beacon-interval-ms:
-              type: integer
-            ir-download:
-              type: boolean
-            created-at:
-              type: string
-              format: date-time
-            is-gateway:
-              type: boolean
-            drop-rate:
-              type: number
-              format: float
-            current-humidity:
-              type: number
-              format: float
-            temperature-offset-override-c:
-              type: number
-              format: float
-              nullable: true
-            orientation:
-              type: string
-            temperature-offset-c:
-              type: number
-              format: float
-              nullable: true
-            updated-at:
-              type: string
-              format: date-time
-            current-rssi:
-              type: number
-              format: float
-            current-temperature-c:
-              type: number
-              format: float
-            ir-setup-enabled:
-              type: boolean
-              nullable: true
-            demo-mode:
-              type: integer
-            humidity-offset:
-              type: number
-              format: float
-              nullable: true
-            display-number:
-              type: string
-            reporting-interval-ds:
-              type: integer
-            inactive:
-              type: boolean
-            oauth-app-assigned-at:
-              type: string
-              format: date-time
-              nullable: true
+          example: "pucks"
         id:
           type: string
+        attributes:
+          $ref: '#/components/schemas/PuckAttributes'
         relationships:
-          type: object
-          properties:
-            room:
-              type: object
-              properties:
-                links:
-                  type: object
-                  properties:
-                    self:
-                      type: string
-                    related:
-                      type: string
-                data:
-                  type: object
-                  properties:
-                    type:
-                      type: string
-                    id:
-                      type: string
-    Reading:
+          $ref: '#/components/schemas/PuckRelationships'
+      required:
+        - type
+        - id
+        - attributes
+        - relationships
+
+    PuckAttributes:
+      type: object
+      properties:
+        puck-display-color:
+          type: string
+          enum: ["white", "black"]
+        name:
+          type: string
+        bluetooth-tx-power-mw:
+          type: integer
+        sub-ghz-radio-tx-power-mw:
+          type: integer
+          nullable: true
+        beacon-interval-ms:
+          type: integer
+        ir-download:
+          type: boolean
+        created-at:
+          type: string
+          format: date-time
+        is-gateway:
+          type: boolean
+        drop-rate:
+          type: number
+          format: float
+        current-humidity:
+          type: integer
+        temperature-offset-override-c:
+          type: number
+          nullable: true
+        orientation:
+          type: string
+          enum: ["standing"]
+        temperature-offset-c:
+          type: number
+          nullable: true
+        updated-at:
+          type: string
+          format: date-time
+        current-rssi:
+          type: integer
+        current-temperature-c:
+          type: number
+          format: float
+        ir-setup-enabled:
+          type: boolean
+          nullable: true
+        demo-mode:
+          type: integer
+        humidity-offset:
+          type: number
+          nullable: true
+        display-number:
+          type: string
+        reporting-interval-ds:
+          type: integer
+        inactive:
+          type: boolean
+        oauth-app-assigned-at:
+          type: string
+          format: date-time
+          nullable: true
+
+    PuckRelationships:
+      type: object
+      properties:
+        room:
+          $ref: '#/components/schemas/Relationship'
+        current-state:
+          $ref: '#/components/schemas/LinkOnly'
+        closest-vents:
+          $ref: '#/components/schemas/LinkOnly'
+        structure:
+          $ref: '#/components/schemas/Relationship'
+        hardware-version:
+          $ref: '#/components/schemas/Relationship'
+        puck-states:
+          $ref: '#/components/schemas/LinkOnly'
+        sensor-readings:
+          $ref: '#/components/schemas/LinkOnly'
+        beacon-sightings:
+          $ref: '#/components/schemas/LinkOnly'
+      required:
+        - room
+        - current-state
+        - closest-vents
+        - structure
+        - hardware-version
+        - puck-states
+        - sensor-readings
+        - beacon-sightings
+
+    Relationship:
+      type: object
+      properties:
+        links:
+          $ref: '#/components/schemas/Links'
+        data:
+          $ref: '#/components/schemas/RelationData'
+      required:
+        - links
+        - data
+
+    LinkOnly:
+      type: object
+      properties:
+        links:
+          $ref: '#/components/schemas/Links'
+      required:
+        - links
+
+    Links:
+      type: object
+      properties:
+        self:
+          type: string
+        related:
+          type: string
+
+    RelationData:
       type: object
       properties:
         type:
           type: string
-        attributes:
-          type: object
-          properties:
-            puck-display-color:
-              type: string
-            name:
-              type: string
-            bluetooth-tx-power-mw:
-              type: integer
-            sub-ghz-radio-tx-power-mw:
-              type: integer
-              nullable: true
-            beacon-interval-ms:
-              type: integer
-            ir-download:
-              type: boolean
-            created-at:
-              type: string
-              format: date-time
-            is-gateway:
-              type: boolean
-            drop-rate:
-              type: number
-              format: float
-            current-humidity:
-              type: number
-              format: float
-            temperature-offset-override-c:
-              type: number
-              format: float
-              nullable: true
-            orientation:
-              type: string
-            temperature-offset-c:
-              type: number
-              format: float
-              nullable: true
-            updated-at:
-              type: string
-              format: date-time
-            current-rssi:
-              type: number
-              format: float
-            current-temperature-c:
-              type: number
-              format: float
-            ir-setup-enabled:
-              type: boolean
-              nullable: true
-            demo-mode:
-              type: integer
-            humidity-offset:
-              type: number
-              format: float
-              nullable: true
-            display-number:
-              type: string
-            reporting-interval-ds:
-              type: integer
-            inactive:
-              type: boolean
-            oauth-app-assigned-at:
-              type: string
-              format: date-time
-              nullable: true
         id:
           type: string
-        relationships:
-          type: object
-          properties:
-            room:
-              type: object
-              properties:
-                links:
-                  type: object
-                  properties:
-                    self:
-                      type: string
-                    related:
-                      type: string
-                data:
-                  type: object
-                  properties:
-                    type:
-                      type: string
-                    id:
-                      type: string
+      required:
+        - type
+        - id
+
+    CollectionMeta:
+      type: object
+      properties:
+        self:
+          type: string
+        first:
+          type: string
+        last:
+          type: string
+        next:
+          type: string
+          nullable: true
+        prev:
+          type: string
+          nullable: true
+      required:
+        - self
+        - first
+        - last
